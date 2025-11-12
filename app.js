@@ -1,8 +1,12 @@
 import express from "express";
 import { data } from "./data.js";
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 
 const app = express();
 app.use(express.json());
+const swaggerDocument = YAML.load("./swagger.yaml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // GET /data
 app.get("/data", (req, res) => {

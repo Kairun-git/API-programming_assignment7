@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  title: API Programming Assignment 5
+  version: 1.0.0
+  description: REST API for dataset management
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /data:
+    get:
+      tags:
+        - Data
+      summary: Get dataset
+      description: Returns all data records
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Data'
+    post:
+      tags:
+        - Data
+      summary: Create new data
+      description: Add new record to dataset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataInput'
+      responses:
+        '201':
+          description: Created successfully
+        '415':
+          description: Unsupported Media Type
+
+  /data/{id}:
+    delete:
+      tags:
+        - Data
+      summary: Delete data by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Deleted successfully
+        '404':
+          description: Data not found
+
+  /data/query:
+    post:
+      tags:
+        - Data Search
+      summary: Search data by forename
+      description: Returns matched records
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryInput'
+      responses:
+        '200':
+          description: Matching results found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Data'
+        '404':
+          description: User not found
+
+components:
+  schemas:
+    Data:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        forename:
+          type: string
+          example: Roy
+        surname:
+          type: string
+          example: Fielding
+    DataInput:
+      type: object
+      properties:
+        forename:
+          type: string
+          example: Tim
+        surname:
+          type: string
+          example: Berners-Lee
+    QueryInput:
+      type: object
+      properties:
+        forename:
+          type: string
+          example: Roy
