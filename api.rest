@@ -1,0 +1,45 @@
+### GET /data
+GET http://localhost:3000/data
+
+###
+
+### GET /data/:id
+GET http://localhost:3000/data/1
+
+###
+
+### POST /data
+POST http://localhost:3000/data
+Content-Type: application/json
+
+{
+  "forename": "Ada",
+  "surname": "Lovelace"
+}
+
+###
+
+### PUT /data/:id
+PUT http://localhost:3000/data/2
+Content-Type: application/json
+
+{
+  "forename": "Linus",
+  "surname": "Torvalds"
+}
+
+###
+
+### DELETE /data/:id
+# ลบข้อมูลตาม id
+DELETE http://localhost:3000/data/3
+
+###
+
+### POST /data/search
+POST http://localhost:3000/data/search
+Content-Type: application/json
+
+{
+  "forename": "Tim"
+}
