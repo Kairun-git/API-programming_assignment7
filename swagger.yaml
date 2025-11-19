@@ -3,13 +3,48 @@ info:
   title: API Programming Assignment 5
   version: 1.0.0
   description: REST API for dataset management
+
 servers:
   - url: http://localhost:3000
     description: Local development server
 
 paths:
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Validates username and password and returns a token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  example: test
+                password:
+                  type: string
+                  example: 1234
+      responses:
+        '201':
+          description: Login successful – token created
+        '401':
+          description: Unauthorized – invalid credentials
+        '415':
+          description: Unsupported Media Type
+        '429':
+          description: Too many login attempts
+
   /data:
     get:
+      security:
+        - TokenAuth: []
       tags:
         - Data
       summary: Get dataset
@@ -23,7 +58,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Data'
+
     post:
+      security:
+        - TokenAuth: []
       tags:
         - Data
       summary: Create new data
@@ -42,6 +80,8 @@ paths:
 
   /data/{id}:
     delete:
+      security:
+        - TokenAuth: []
       tags:
         - Data
       summary: Delete data by ID
@@ -57,8 +97,10 @@ paths:
         '404':
           description: Data not found
 
-  /data/query:
+  /data/search:
     post:
+      security:
+        - TokenAuth: []
       tags:
         - Data Search
       summary: Search data by forename
@@ -82,6 +124,12 @@ paths:
           description: User not found
 
 components:
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+
   schemas:
     Data:
       type: object
@@ -95,6 +143,7 @@ components:
         surname:
           type: string
           example: Fielding
+
     DataInput:
       type: object
       properties:
@@ -104,6 +153,7 @@ components:
         surname:
           type: string
           example: Berners-Lee
+
     QueryInput:
       type: object
       properties:

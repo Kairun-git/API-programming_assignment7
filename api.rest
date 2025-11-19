@@ -1,16 +1,28 @@
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "1234"
+}
+
 ### GET /data
 GET http://localhost:3000/data
+Authorization: 6hcik8vt5h3
 
 ###
 
 ### GET /data/:id
 GET http://localhost:3000/data/1
+Authorization: 6hcik8vt5h3
 
 ###
 
 ### POST /data
 POST http://localhost:3000/data
 Content-Type: application/json
+Authorization: 6hcik8vt5h3
 
 {
   "forename": "Ada",
@@ -22,6 +34,7 @@ Content-Type: application/json
 ### PUT /data/:id
 PUT http://localhost:3000/data/2
 Content-Type: application/json
+Authorization: 6hcik8vt5h3
 
 {
   "forename": "Linus",
@@ -32,12 +45,14 @@ Content-Type: application/json
 
 ### DELETE /data/:id
 DELETE http://localhost:3000/data/2
+Authorization: 6hcik8vt5h3
 
 ###
 
 ### POST /data/search
 POST http://localhost:3000/data/search
 Content-Type: application/json
+Authorization: 6hcik8vt5h3
 
 {
   "forename": "Tim"
